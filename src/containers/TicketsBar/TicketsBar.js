@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import data from '../../db/tickets';
-import Ticket from '../Ticket/Ticket';
+import Ticket from '../../components/Ticket/Ticket';
 
 class TicketsBar extends Component {
   state = {
     tickets: []
-  }
+  };
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('should')
+    console.log('should');
     return true; //nextProps !== this.props.filters
   }
   
@@ -19,21 +19,25 @@ class TicketsBar extends Component {
     this.setState({tickets: data.tickets})
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
+  }
+
   render(){
 
     const filters = this.props.filters;
-    console.log(filters)
-    const multiplier = this.props.currency.multiplier
-    let ticketsArray
+    console.log(filters);
+    const multiplier = this.props.currency.multiplier;
+    let ticketsArray;
     if (!filters.length) {
      ticketsArray = data.tickets 
     } else {
       ticketsArray = data.tickets.filter(ticket => {
-        console.log(ticket.stops)
+        console.log(ticket.stops);
         return filters.some(filter => +filter === ticket.stops) 
       })
     }
-    console.log(ticketsArray)
+    console.log(ticketsArray);
   return (
     <div>
       {ticketsArray
@@ -59,10 +63,13 @@ class TicketsBar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  filters: state.visibilityFilterReducer.filters,
-  currency: state.currencyReducer
-})
+  filters: state.filter.filters,
+  currency: state.currency
+});
+
+const mapDispatchToProps = dispatch => ({
+
+});
 
 
-
-export default connect(mapStateToProps)(TicketsBar);
+export default connect(mapStateToProps, mapDispatchToProps)(TicketsBar);

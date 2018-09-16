@@ -1,0 +1,1 @@
+export const SET_CURRENCY =      'currency/SET_CURRENCY';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { setVisibilityFilter } from '../../actions';
+import { setVisibilityFilter } from '../../store/filter/actions/index';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 const fields = [
   { name: 'Все', filter: 'SET_ALL' },
@@ -9,8 +10,6 @@ const fields = [
   { name: '2 пересадки', filter: '2' },
   { name: '3 пересадки', filter: '3' }
 ];
-
-const initialState = fields;
 
 class TicketsFilter extends Component {
   constructor(props) {
@@ -25,25 +24,27 @@ class TicketsFilter extends Component {
   }
 
   componentDidMount() {
-    console.log('cmpdddmnt');
-    this.props.setVisibilityFilter('SET_ALL');
-    //this.setState({ SET_ALL: true });
+    const { setVisibilityFilter } = this.props.filterActions;
+    setVisibilityFilter('SET_ALL');
   }
 
   handleFilterChange = (filter, e) => {
-    const filters = this.props.filters;
+    const { setVisibilityFilter } = this.props.filterActions;
+    const { filters } = this.props;
 
+    console.log(filters);
+    console.log(filter);
     if (filter === 'SET_ALL' ) {
-      this.setState({SET_ALL: true, 0:false,1:false,2:false,3:false})
-      this.props.setVisibilityFilter(filter);
-    } else if (!filters.includes(filter) && filter !== 'SET_ALL') { 
-      this.setState({SET_ALL:false, [e.target.name]: true})
-      this.props.setVisibilityFilter(filter);
+      this.setState({SET_ALL: true, 0: false, 1: false, 2: false, 3: false});
+      setVisibilityFilter(filter);
+    } else if (!filters.includes(filter) && filter !== 'SET_ALL') {
+      this.setState({SET_ALL: false, [e.target.name]: true});
+      setVisibilityFilter(filter);
     } else if (filters.includes(filter) && filter !== 'SET_ALL') {
-      this.setState({[e.target.name]: false})
-      this.props.setVisibilityFilter(filter);
+      this.setState({[e.target.name]: false});
+      setVisibilityFilter(filter);
     }
-  }
+  };
  
   render() {
 
@@ -51,7 +52,6 @@ class TicketsFilter extends Component {
       <form>
         <fieldset>
           {fields.map(item => {
-            
             return (
               <div key={item.name}>
                 <input
@@ -72,15 +72,13 @@ class TicketsFilter extends Component {
 }
 
 const mapStateToProps = state => ({
-  filters: state.visibilityFilterReducer.filters
+  filters: state.filter.filters
 });
 
 const mapDispatchToProps = dispatch => ({
-  setVisibilityFilter: filter => dispatch(setVisibilityFilter(filter))
-  //unsetVisibilityFilter: filter => dispatch(unsetVisibilityFilter(filter))
+  filterActions: bindActionCreators({
+    setVisibilityFilter
+  }, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TicketsFilter);
+export default connect( mapStateToProps, mapDispatchToProps )(TicketsFilter);

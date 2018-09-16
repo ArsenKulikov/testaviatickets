@@ -1,6 +1,6 @@
 import React from 'react';
-import CurrenciesToogle from '../CurrenciesToogle/CurrenciesToogle';
-import TicketsFilter from '../TicketsFilter/TicketsFilter';
+import CurrenciesToogle from '../../containers/CurrenciesToogle/CurrenciesToogle';
+import TicketsFilter from '../../containers/TicketsFilter/TicketsFilter';
 
 const Sidebar = () => {
   return (

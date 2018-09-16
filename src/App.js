@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TicketsBar from './components/TicketsBar/TicketsBar';
+import TicketsBar from './containers/TicketsBar/TicketsBar';
 import Sidebar from './components/Sidebar/Sidebar';
 
 import './App.css';
