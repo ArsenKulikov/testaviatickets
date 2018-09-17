@@ -61,7 +61,7 @@ class TicketsBar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  filters: state.filter.filters,
+  filters: state.filter,
   currency: state.currency
 });
 

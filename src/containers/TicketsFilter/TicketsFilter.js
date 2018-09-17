@@ -68,7 +68,7 @@ class TicketsFilter extends Component {
 }
 
 const mapStateToProps = state => ({
-  filters: state.filter.filters
+  filters: state.filter
 });
 
 const mapDispatchToProps = dispatch => ({
