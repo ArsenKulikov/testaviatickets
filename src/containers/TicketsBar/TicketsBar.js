@@ -24,9 +24,7 @@ class TicketsBar extends Component {
   }
 
   render(){
-
     const filters = this.props.filters;
-    console.log(filters);
     const multiplier = this.props.currency.multiplier;
     let ticketsArray;
     if (!filters.length) {
